@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import KeyHandler from "./KeyHandler"
 import Pads from "./Pads"
 import "./App.css";
-import reducer from "./reducer"
 
 const LETTERS = "QWEASDZXC".split("")
+
+const Metronome = ({ bpm }) => (
+  <div className="Metronome">
+    <label>{bpm}bpm</label>
+  </div>
+)
 
 class App extends Component {
   constructor (props) {
@@ -17,15 +22,17 @@ class App extends Component {
   dispatch (action) {
     this.setState(prevState => this.reduce(prevState, action))
   }
-  keyDown = (key) => this.dispatch({ type: "KEYDOWN", key })
-  keyUp = (key) => this.dispatch({ type: "KEYUP", key })
+  keyDown = (key) => this.dispatch({ type: "keydown", key })
+  keyUp = (key) => this.dispatch({ type: "keyup", key })
+  padClicked = (letter) => this.dispatch({ type: "padclicked", letter })
 
   render() {
     return (
       <div className="App">
         <KeyHandler detect={LETTERS} onKeyDown={this.keyDown} onKeyUp={this.keyUp} />
+        <Metronome bpm={this.state.bpm} />
         <div className="pads">
-          <Pads letters={LETTERS} pressed={this.state.pressed} />
+          <Pads letters={LETTERS} padsState={this.state.pads} onClick={this.padClicked}/>
         </div>
       </div>
     );

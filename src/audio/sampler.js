@@ -23,7 +23,7 @@ export default class Sampler {
     this.samples = new Loader(names)
     this.sources = {}
   }
-  play (name) {
+  start (name) {
     stop(name)
     const buffer = this.samples.get(name)
     if (buffer) {

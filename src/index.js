@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Sampler from './lib/sampler'
-import reducer from "./reducer"
+import Sampler from './audio/sampler'
+import { reducer, log } from "./actions/reducer"
+import { actions, initialState } from "./actions"
 import './index.css';
 
 const files = {
@@ -12,7 +13,7 @@ const files = {
 }
 
 const sampler = new Sampler(files)
-const reduce = reducer({ sampler })
+const reduce = log(true, reducer(initialState, actions, { sampler }))
 
 ReactDOM.render(
   <App reduce={reduce} />,
